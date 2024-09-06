@@ -1,9 +1,14 @@
 const numeroSenha = document.querySelector('.parametro-senha__texto');
-let tamanhoSenha = 5;
+let tamanhoSenha = 12;
 numeroSenha.textContent = tamanhoSenha;
-
 const botoes = document.querySelectorAll('.parametro-senha__botao');
-
+const campoSenha = document.querySelector('#campo-senha');
+const checkbox = document.querySelectorAll('.checkbox');
+const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVXYWZ';
+const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
+const numeros = '0123456789';
+const simbolos = '!@#$%&*?';
+const forcaSenha = document.querySelector('.forca');
 botoes[0].onclick = diminuiTamanho;
 botoes[1].onclick = aumentaTamanho;
 
@@ -24,17 +29,9 @@ function aumentaTamanho(){
     geraSenha();
 }
 
-const campoSenha = document.querySelector('#campo-senha');
-const checkbox = document.querySelectorAll('.checkbox');
-
 for (i=0; i<checkbox.length; i++){
     checkbox[i].onclick = geraSenha;
 }
-
-const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVXYWZ';
-const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
-const numeros = '0123456789';
-const simbolos = '!@#$%*?';
 
 geraSenha();
 
@@ -43,21 +40,33 @@ function geraSenha(){
     if (checkbox[0].checked){
         alfabeto = alfabeto + letrasMaiusculas;
     }
-    if (checkbox[0].checked){
-        alfabeto = alfabeto + letrasMinúculas;
+    if (checkbox[1].checked){
+        alfabeto = alfabeto + letrasMinusculas;
     }
     if (checkbox[2].checked){
         alfabeto = alfabeto + numeros;
     }
-    if (checkbox[0].checked){
+    if (checkbox[3].checked){
         alfabeto = alfabeto + simbolos;
     }
     console.log(alfabeto);
     let senha = '';
-    for (left i= 0; i < tamanhoSenha.i++){
+    for (let i = 0; i < tamanhoSenha;i++){
         let numeroAleatorio = Math.random()*alfabeto.length;
         numeroAleatorio = Math.floor(numeroAleatorio);
         senha = senha + alfabeto[numeroAleatorio];
     }
     campoSenha.value = senha;
+    classificaSenha();
+}
+
+function classificaSenha() {
+    forcaSenha.classList.remove('fraca','media','forte');
+    if (tamanhoSenha > 11){
+        forcaSenha.classList.add('forte');
+    } else if (tamanhoSenha > 5 && tamanhoSenha < 12 ) {
+        forcaSenha.classList.add('media');
+    } else if (tamanhoSenha <= 5){
+        forcaSenha.classList.add('fraca');
+    }
 }
